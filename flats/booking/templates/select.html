@@ -1,0 +1,17 @@
+
+<h1>{{ flat.id }} --- {{ flat.city }} --- {{ flat.postcode }} --- {{ flat.street }}
+ --- {{ flat.number_of_building }} / {{ flat.number_of_flat }} --- {{ flat.available_from }} --- {{ flat.available_to }} </h1>
+
+ 
+ 
+ <form  action="{% url 'booking:booked' flat.id %}" method="POST" style="margin: 0">
+{% csrf_token %}
+	<input 	id="nickname" type="text" name="nickname" placeholder="Give a your Nickname"  maxlength="100" required />
+	<input id="date_from" type="date" name="date_from" placeholder="Give a start date" required />
+	<input id="date_to" type="date" name="date_to" placeholder="Give a end date" required />
+	
+	
+	<button id="booking_submit" type="submit" > Book!</button>
+</form>
+
+<h1>{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}</h1>

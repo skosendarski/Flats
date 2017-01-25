@@ -1,0 +1,75 @@
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+
+<h1> Welcome on our site! </h1>
+
+
+<form  action="{% url 'booking:search'%}" method="POST" style="margin: 0">
+{% csrf_token %}
+	<input 	id="city" type="text" name="city" placeholder="Give a name of city"  maxlength="30" required />
+	<input id="date_from" type="date" name="date_from" placeholder="Give a start date" required />
+	<input id="date_to" type="date" name="date_to" placeholder="Give a end date" required />
+	
+	<button id="search_submit" type="submit" > Search!</button>
+</form>
+
+
+
+<h1>{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}</h1>
+
+
+
+
+
+
+All available offers are listed below
+
+
+{% if flats_list %}
+<table>
+<tr>
+	<th>Id</th>
+	<th>City</th>
+	<th>Postcode</th>
+	<th>Street</th>
+	<th>No. of building</th>
+	<th>No. of flat</th>
+	<th>Available from</th>
+	<th>Available to</th>
+</tr>
+{% for flat in flats_list %}
+<tr>
+<td> {{ flat.id }} </td>
+<td> {{ flat.city }} </td>
+<td> {{ flat.postcode }} </td>
+<td> {{ flat.street }} </td>
+<td> {{ flat.number_of_building }} </td>
+<td> {{ flat.number_of_flat }} </td>
+<td> {{ flat.available_from }} </td>
+<td> {{ flat.available_to }} </td>
+<td> <form action = "{% url 'booking:select' flat.id %}"> <button id="select" type="submit">choose this offer! </button> </form> </td>			
+</tr>
+
+{% endfor %}
+</table>
+{% else %}
+	<p>We don't have any offers.</p>
+{% endif %}
